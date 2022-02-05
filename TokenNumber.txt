@@ -1,0 +1,6 @@
+Datatypes
+
+"inmt" = 100
+"floamt" = 101
+"strinmg" = 102
+"booml" = 103

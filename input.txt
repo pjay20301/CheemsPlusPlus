@@ -1,0 +1,2 @@
+inmt cc = 5
+inmt abs
