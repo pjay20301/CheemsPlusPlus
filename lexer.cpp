@@ -76,7 +76,8 @@ void lexer() {
         while(true) {
             
             char ch = fgetc(fp);
-            cout << "ch: " << ch << endl;
+            if(ch == EOF)
+                break;
             // Entry checkpoint for identifier
             if((ch >= 'A' && ch <= 'Z') or (ch >= 'a' && ch <= 'z') or (ch == '_')) {
                 string str = "";
@@ -98,11 +99,10 @@ void lexer() {
             } // Entry checkpoint for numericals
             else if((ch >= '0' && ch <= '9') or ch == '.' or ch == '+' or ch == '-') { 
                 
-                int count = ch == '.';
+                int count = 0;
                 string str = "";
                 int check = 0;
-                while(((ch >= '0' && ch <= '9') or ch == '.') and check <= 1) {
-                    str += ch;
+                while(((ch >= '0' && ch <= '9') or ch == '.') and count <= 1 and check <=1) {
                     if(ch == '.') {
                         count++;
                         break;
@@ -110,6 +110,7 @@ void lexer() {
                     if(ch == '+' || ch == '-') {
                         check++;
                     }
+                    str += ch;
                     ch = fgetc(fp);
                 }
                 while((ch >= '0' && ch <= '9') or ch == '.') {
@@ -118,7 +119,7 @@ void lexer() {
                     if(ch == '.') {
                         // excess floating points
                         ch = fgetc(fp);
-                        while(ch != '\0') {
+                        while(ch != ' ') {
                             str += ch;
                             ch = fgetc(fp);
                         }
@@ -126,24 +127,24 @@ void lexer() {
                     } else if(ch < '0' && ch > '9') {
                         // no digits after floating point error
                         ch = fgetc(fp);
-                        while(ch != '\0') {
+                        while(ch != ' ') {
                             str += ch;
                             ch = fgetc(fp);
                         }
                         cout << "ERROR! : No digit after floating point" << ", string " << str << ", line number " << lineNo << endl;
                     }
                 }
-                if((ch < '0' || ch > '9') and (ch != '\0' or ch != '\n')) {
-                    cout << "ERROR! : Not a numerical" << ", string " << str << ", line number " << lineNo << endl;
-                }
-                else if(count <= 1) {
+                if((ch == ' ' or ch == '\n' or (ch == EOF)) and count <= 1) {
                     cout << "Token " << NUMERIC << ", string " << str << ", line number " << lineNo << endl;
+                }
+                else {
+                    cout << "ERROR! : Not a numerical" << ", string " << str << ", line number " << lineNo << endl;
                 }
             } // Entry checkpoint for string literals
             else if(ch == '\"') {
                 string str = "";
                 int count = 0;
-                while(ch != '\0') {
+                while(ch != ' ') {
                     if(ch == '\"') {
                         count++;
                     } 
@@ -159,7 +160,7 @@ void lexer() {
             else if(ch == '\'') {
                 string str = "";
                 int count = 0;
-                while(ch != '\0') {
+                while(ch != ' ') {
                     if(ch == '\'') {
                         count++;
                     } 
@@ -187,15 +188,14 @@ void lexer() {
                 } 
             } else {
                 string str = "";
-                while(ch != '\0' && ch != '\n') {
+                while(ch != ' ' && ch != '\n' && ch != EOF) {
                     str += ch;
                     ch = fgetc(fp);
                 }
                 auto itr = operators.find(str);
-                if(itr != operators.end() && ch != '\0' && ch != '\n') {
+                if(itr != operators.end() && ch != ' ' && ch != '\n' && ch != EOF) {
                     cout << "Token " << operators[str] << ", string " << str << ", line number " << lineNo << endl;
-                } else if(ch == '\0' or ch == '\n') {
-                    cout << str << " " << str.length() << endl;
+                } else if(ch == ' ' or ch == '\n' or ch == EOF) {
                     char c = str[0];
                     str = "";
                     str += c;
@@ -209,9 +209,7 @@ void lexer() {
                     cout << "ERROR! : Not a valid operator" << ", string " << str << ", line number " << lineNo << endl;
                 }
             }
-            if(ch == '\n')
-                break;
-            if(feof(fp)) 
+            if(ch == '\n' or ch == EOF)
                 break;
         }
         lineNo++;
