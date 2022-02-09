@@ -1,16 +1,16 @@
 inmt fact( inmt n) {
 imf (n <= 1)
-returmn 1
+returmn 1;
 elmse
-returmn n*fact(n-1)
+returmn n*fact(n-1);
 }
 voimd maimn(voimd) {
-inmt x
-x = 1.5.6
+inmt x;
+x = 1;
 whimle (x <= 10) {
-write(x)
-write(fact(x))
-writeln()
-x = x + 1
+write(x);
+write(fact(x));
+writeln();
+x = x + 1;
 }
 }
