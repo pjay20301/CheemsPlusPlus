@@ -200,8 +200,9 @@ void lexer() {
                 ch = fgetc(fp);
                 if(ch == '+') {
                     cout << "Token " << operators["++"] << ", string " << "++" << ", line number " << lineNo << endl;
-                } else if(ch >= '0' and ch <= '9') {
+                } else if((ch >= '0' and ch <= '9') or ch == ' ') {
                     cout << "Token " << operators["+"] << ", string " << "+" << ", line number " << lineNo << endl;
+                    if(ch != ' ')
                     goto numerical;
                 } else if(ch == '=') {
                     cout << "Token " << operators["+="] << ", string " << "+=" << ", line number " << lineNo << endl;
@@ -212,7 +213,7 @@ void lexer() {
                 ch = fgetc(fp);
                 if(ch == '-') {
                     cout << "Token " << operators["--"] << ", string " << "--" << ", line number " << lineNo << endl;
-                } else if(ch >= '0' and ch <= '9') {
+                } else if((ch >= '0' and ch <= '9') or ch == ' ') {
                     cout << "Token " << operators["-"] << ", string " << "-" << ", line number " << lineNo << endl;
                     goto numerical;
                 } else if(ch == '=') {
@@ -246,11 +247,11 @@ void lexer() {
                 ch = fgetc(fp);
                 if(ch == '&') {
                     cout << "Token " << operators["&&"] << ", string " << "&&" << ", line number " << lineNo << endl;
-                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' and ch <= 'Z')) {
+                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' and ch <= 'Z') or ch == ' ') {
                     cout << "Token " << operators["&"] << ", string " << "&" << ", line number " << lineNo << endl;
                     if(ch >= '0' and ch <= '9')
                         goto numerical;
-                    else 
+                    else if(ch != ' ')
                         goto identifier;
                 } else {
                     cout << "ERROR! : Not an operator" << ", string " << "&" + ch << ", line number " << lineNo << endl;
@@ -259,11 +260,11 @@ void lexer() {
                 ch = fgetc(fp);
                 if(ch == '|') {
                     cout << "Token " << operators["||"] << ", string " << "||" << ", line number " << lineNo << endl;
-                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' and ch <= 'Z')) {
+                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' and ch <= 'Z') or ch == ' ') {
                     cout << "Token " << operators["|"] << ", string " << "|" << ", line number " << lineNo << endl;
                     if(ch >= '0' and ch <= '9')
                         goto numerical;
-                    else 
+                    else if(ch != ' ')
                         goto identifier;
                 } else {
                     cout << "ERROR! : Not an operator" << ", string " << "|" + ch << ", line number " << lineNo << endl;
@@ -272,11 +273,11 @@ void lexer() {
                 ch = fgetc(fp);
                 if(ch == '=') {
                     cout << "Token " << operators["!="] << ", string " << "!=" << ", line number " << lineNo << endl;
-                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' and ch <= 'Z')) {
+                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' and ch <= 'Z') or ch == ' ') {
                     cout << "Token " << operators["!"] << ", string " << "!" << ", line number " << lineNo << endl;
                     if(ch >= '0' and ch <= '9')
                         goto numerical;
-                    else 
+                    else if(ch != ' ')
                         goto identifier;
                 } else {
                     cout << "ERROR! : Not an operator" << ", string " << "!" + ch << ", line number " << lineNo << endl;
@@ -285,11 +286,11 @@ void lexer() {
                 ch = fgetc(fp);
                 if(ch == '<') {
                     cout << "Token " << operators["<<"] << ", string " << "<<" << ", line number " << lineNo << endl;
-                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' or ch <= 'Z')) {
+                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' or ch <= 'Z') or ch == ' ') {
                     cout << "Token " << operators["<"] << ", string " << "<" << ", line number " << lineNo << endl;
                     if(ch >= '0' and ch <= '9')
                         goto numerical;
-                    else 
+                    else if(ch != ' ')
                         goto identifier;
                 } else if(ch == '=') {
                     cout << "Token " << operators["<="] << ", string " << "<=" << ", line number " << lineNo << endl;
@@ -300,11 +301,11 @@ void lexer() {
                 ch = fgetc(fp);
                 if(ch == '>') {
                     cout << "Token " << operators[">>"] << ", string " << ">>" << ", line number " << lineNo << endl;
-                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' or ch <= 'Z')) {
+                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' or ch <= 'Z') or ch == ' ') {
                     cout << "Token " << operators[">"] << ", string " << ">" << ", line number " << lineNo << endl;
                     if(ch >= '0' and ch <= '9')
                         goto numerical;
-                    else 
+                    else if(ch != ' ')
                         goto identifier;
                 } else if(ch == '=') {
                     cout << "Token " << operators[">="] << ", string " << ">=" << ", line number " << lineNo << endl;
@@ -315,11 +316,11 @@ void lexer() {
                 ch = fgetc(fp);
                 if(ch == '=') {
                     cout << "Token " << operators["=="] << ", string " << "==" << ", line number " << lineNo << endl;
-                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' or ch <= 'Z')) {
+                } else if((ch >= '0' and ch <= '9') or (ch >= 'a' and ch <= 'z') or (ch >= 'A' or ch <= 'Z') or ch == ' ') {
                     cout << "Token " << operators["="] << ", string " << "=" << ", line number " << lineNo << endl;
                     if(ch >= '0' and ch <= '9')
                         goto numerical;
-                    else 
+                    else if(ch != ' ')
                         goto identifier;
                 } else {
                     cout << "ERROR! : Not an operator" << ", string " << "=" + ch << ", line number " << lineNo << endl;
