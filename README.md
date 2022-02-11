@@ -4,4 +4,4 @@
 
 Jay Patel <br />
 Aman Jham <br />
-Kruti Bhairya
+Kruti Baraiya
