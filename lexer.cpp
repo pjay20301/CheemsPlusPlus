@@ -12,6 +12,7 @@ void setToken() {
     int c = 104;
     datatypes.insert({"inmt", c++});
     datatypes.insert({"floamt", c++});
+    datatypes.insert({"chamr", c++});
     datatypes.insert({"strinmg", c++});
     datatypes.insert({"booml", c++});
     datatypes.insert({"voimd", c++}); 
@@ -100,7 +101,7 @@ void lexer() {
                 } else if (!check && str != "") {
                     cout << "Token " << IDENTIFIER << ", string " << str << ", line number " << lineNo << endl; 
                 }
-
+                goto start;
             } // Entry checkpoint for numericals
             else if((ch >= '0' && ch <= '9') or ch == '.') { 
                 numerical:
@@ -154,14 +155,14 @@ void lexer() {
             else if(ch == '\"') {
                 string str = "";
                 int count = 0;
-                while(ch != ' ') {
-                    if(ch == '\"') {
-                        count++;
-                    } 
+                ch = fgetc(fp);
+                while(ch != '\"') {
+                    if(ch == '\n' or ch == EOF)
+                        break;
                     str += ch;
                     ch = fgetc(fp);
                 }
-                if(count == 2 && ch == '\"') {
+                if(ch == '\"') {
                     cout << "Token " << STRING << ", string " << str << ", line number " << lineNo << endl;
                 } else {
                     cout << "ERROR! : Not a string" << ", string " << str << ", line number " << lineNo << endl;
@@ -170,14 +171,14 @@ void lexer() {
             else if(ch == '\'') {
                 string str = "";
                 int count = 0;
-                while(ch != ' ') {
-                    if(ch == '\'') {
-                        count++;
-                    } 
+                ch = fgetc(fp);
+                while(ch != '\'') {
+                    if(ch == '\n' or ch == EOF)
+                        break;
                     str += ch;
                     ch = fgetc(fp);
                 }
-                if(count == 2 && ch == '\"' && str.length() == 3) {
+                if(ch == '\'' && str.length() == 1) {
                     cout << "Token " << CHAR << ", string " << str << ", line number " << lineNo << endl;
                 } else {
                     cout << "ERROR! : Not a character" << ", string " << str << ", line number " << lineNo << endl;
@@ -185,17 +186,15 @@ void lexer() {
             } //Entry checkpoint for comments
             else if(ch == '$') {
                 string str = "$";
-                int count = 1;
                 ch = fgetc(fp);
                 while(ch != '$') {
+                    if(ch == EOF) {
+                        cout << "ERROR! : lexical error" << ", string " << str << ", line number " << lineNo << endl;
+                        break;
+                    }
                     str += ch;
-                    if(ch == '$')
-                        count++;
                     ch = fgetc(fp);
                 }
-                if(count != 2) {
-                    cout << "ERROR! : lexical error" << ", string " << str << ", line number " << lineNo << endl;
-                } 
             } else if(ch == '+') {
                 ch = fgetc(fp);
                 if(ch == '+') {

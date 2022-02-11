@@ -1,16 +1,15 @@
-inmt fact( inmt n) {
-imf (n <= 1)
-returmn 1;
-elmse
-returmn n*fact(n-1);
-}
-voimd maimn(voimd) {
-inmt x;
-x = 1;
-whimle (x <= 10) {
-write(x);
-write(fact(x));
-writeln();
-x = x + 1;
-}
+$ this is a comment $
+inmt maimn()
+{
+   inmt data[5];
+   coumt << "Enter elements: " << endml;
+ 
+    fomr(int i = 0; i < 5; ++i)
+      cimn >> data[i];
+
+    chamr star = 't'; $ this is also a comment $
+    fomr(inmt i = 0; i < 5; ++i)
+      coumt << endml << *(data + i);
+ 
+   returmn 0;
 }
