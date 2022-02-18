@@ -1,6 +1,68 @@
-Datatypes
+Identifier = 100
+Numeric Literal = 101
+String Literal = 102
+Character Literal = 103
 
-"inmt" = 100
-"floamt" = 101
-"strinmg" = 102
-"booml" = 103
+
+Datatypes:
+
+inmt = 104
+floamt = 105
+strinmg = 106
+booml = 107
+voimd = 108
+
+
+Keywords:
+
+maimn = 109
+cimn = 110
+coumt = 111
+whimle = 112
+fomr = 113
+imf = 114
+elmse = 115
+elmse imf = 116
+trmue = 117
+falmse = 118
+endml = 119
+breamk = 120
+contimnue = 121
+returmn = 122
+
+Operators:
+
+"+" = 123  
+"-" = 124
+"*" = 125
+"/" = 126
+"%" = 127
+"==" = 128
+"!=" = 129
+"=" = 130
+"&&" = 131
+"||" = 132
+"!" = 133
+"&" = 134
+"|" = 135
+"<" = 136
+">" = 137
+"<=" = 138
+">=" = 139
+"++" = 140
+"--" = 141
+"+=" = 142
+"-=" = 143
+"<<" = 144
+">>" = 145
+"#" = 146
+";" = 147
+"," = 148
+"{" = 149
+"}" = 150
+"(" = 151
+")" = 152
+"[" = 153
+"]" = 154
+"\"" = 155
+"\'" = 156

@@ -1,0 +1,19 @@
+$ Test Case 2 $
+
+$ Multiline comment - Function to return addition of integer
+and a floating point number $
+floamt getProduct(inmt a, floamt f)
+{
+
+	floamt ans = a*f
+	returmn ans
+}
+
+inmt maimn()
+{
+    inmt num1 = 2
+    floamt num2 = -2.34 
+    floamt c = getProduct(num1,num2)
+    coumt << "The answer is : " << c << endml
+    returmn 0
+}
