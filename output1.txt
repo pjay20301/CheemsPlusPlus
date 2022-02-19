@@ -1,0 +1,30 @@
+Token 104, string inmt, line number 5
+Token 110, string maimn, line number 5
+Token 152, string (, line number 5
+Token 153, string ), line number 5
+Token 150, string {, line number 6
+Token 104, string inmt, line number 7
+Token 100, string x, line number 7
+Token 131, string =, line number 7
+Token 101, string 3.4, line number 7
+Token 105, string floamt, line number 9
+Token 100, string f, line number 9
+Token 131, string =, line number 9
+ERROR! : Too many floating points, string 3.1.2, line number 9
+Token 106, string chamr, line number 13
+Token 100, string c, line number 13
+Token 131, string =, line number 13
+Token 103, string K, line number 13
+Token 108, string booml, line number 15
+Token 100, string val1, line number 15
+Token 131, string =, line number 15
+Token 100, string true, line number 15
+Token 108, string booml, line number 16
+Token 100, string val2, line number 16
+Token 131, string =, line number 16
+Token 100, string false, line number 16
+Token 107, string strinmg, line number 19
+Token 100, string wrong, line number 19
+Token 131, string =, line number 19
+ERROR! : Not a string, string i am not going to terminate......, line number 19
+Token 151, string }, line number 20
