@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define IDENTIFIER 100
-#define NUMERIC 101
-#define STRING 102
-#define CHAR 103
+#define IDENTIFIER 100  //Token number for IDENTIFIER
+#define NUMERIC 101 // Token number for NUMERIC literal
+#define STRING 102 // Token number for STRING literal
+#define CHAR 103 // Token number for CHARACTER literal
 
 map <string, int> operators, keywords, datatypes;  //map containing the operators, keywords and datatypes
 
