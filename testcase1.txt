@@ -4,16 +4,20 @@ $ This is a comment. This is test case 1 $
 
 inmt maimn()
 {
-	inmt x = 3.4  $semantic error$
+	inmt x = 3.4M;  $semantic error$
     
-	floamt f = 3.1.2 $ invalid float$
+	floamt f = 3.1.2; $ invalid float$
 	
+   
+    x+=3;
+    x -= 2M;
     
-    chamr c = 'K' 
-    
-    booml val1 = true
-    booml val2 = false
+    chamr c = 'K'; 
 
-    $ not terminated string will return an error message with the characters enclosed within the quotation marks $
+    
+    booml val1 = true;
+    booml val2 = false;
+
+    $ not terminated string $
     strinmg wrong = "i am not going to terminate......
 }
