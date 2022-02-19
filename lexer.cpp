@@ -1,7 +1,15 @@
+/**
+ * Language name - Cheems++
+ * Group Number - 8
+ * Jay Patel - 2019A7PS0156H
+ * Kruti Baraiya - 2019A7PS1260H
+ * Aman Jham - 2019A7PS0071H
+ */
+
 #include <bits/stdc++.h>
 using namespace std;
 
-#define IDENTIFIER 100  //Token number for IDENTIFIER
+#define IDENTIFIER 100 //Token number for IDENTIFIER
 #define NUMERIC 101 // Token number for NUMERIC literal
 #define STRING 102 // Token number for STRING literal
 #define CHAR 103 // Token number for CHARACTER literal
@@ -10,7 +18,6 @@ map <string, int> operators, keywords, datatypes;  //map containing the operator
 
 /**
  * @brief Set the values for Tokens
- * 
  */
  
 void setToken() {
@@ -76,7 +83,6 @@ void setToken() {
 
 /**
  * @brief Function for lexical analysis 
- * 
  */
 void lexer() {
     
