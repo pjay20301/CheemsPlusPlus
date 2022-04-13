@@ -1,0 +1,31 @@
+program' -> program
+program -> function program
+program -> statement program
+program -> ''
+function -> identifier ( parameterList ) { blockStatement }
+parameterList -> datatype identifier , parameterList
+parameterList -> datatype identifier
+assignmentStatement -> identifier = expression
+expression -> identifier
+expression -> datatype
+expression -> identifier ( argumentList )
+datatype -> integerLiteral | floatLiteral | charLiteral | stringLiteral
+argumentList -> identifier , argumentList
+argumentList -> identifier
+argumentList -> datatype
+expression -> expression operator expression 
+operator -> + | - | * 
+expression -> ! expression
+expression -> ( expression )
+declarationStatement -> identifier , declarationStatement
+declarationStatement -> identifier
+conditionalStatement -> if ( expression ) { blockStatement }
+conditionalStatement -> if ( expression ) { blockStatement } else { blockStatement }
+loopStatement -> while ( expression ) { blockStatement }
+statement -> datatype declarationStatement ;
+statement -> assignmentStatement ;
+statement -> loopStatement
+statement -> conditionalStatement
+statement -> ;
+blockStatement -> statement blockStatement
+blockStatement -> ''

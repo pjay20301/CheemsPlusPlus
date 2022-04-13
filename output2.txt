@@ -40,7 +40,7 @@ Token 100, string x, line number 10
 Token 131, string =, line number 10
 Token 101, string 1, line number 10
 Token 148, string ;, line number 10
-Token 100, string while, line number 11
+Token 113, string whimle, line number 11
 Token 152, string (, line number 11
 Token 100, string x, line number 11
 Token 137, string <, line number 11

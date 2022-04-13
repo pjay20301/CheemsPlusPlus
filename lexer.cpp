@@ -19,7 +19,7 @@ map <string, int> operators, keywords, datatypes;  //map containing the operator
 /**
  * @brief Set the values for Tokens
  */
- 
+
 void setToken() {
     int c = 104;
     datatypes.insert({"inmt", c++});
