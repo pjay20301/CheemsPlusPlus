@@ -1,0 +1,39 @@
+Nonterminal,Nullable?,First,Follow
+S,✖,"main, int, float, string, char, boolean",
+PROGRAM,✖,"main, int, float, string, char, boolean",$
+FUNCTION_LIST,✖,"int, float, string, char, boolean",main
+FIRST_FUNCTION,✖,"int, float, string, char, boolean","main, int, float, string, char, boolean"
+FIRST_FUNCTION_PRE,✖,"int, float, string, char, boolean","), int, float, string, char, boolean"
+FIRST_FUNCTION_POST,✖,"), int, float, string, char, boolean","main, int, float, string, char, boolean"
+MORE_FUNCTIONS,✔,"int, float, string, char, boolean",main
+MAIN,✖,main,$
+TYPE,✖,"int, float, string, char, boolean",id
+FORMAL_PARAMS,✖,"int, float, string, char, boolean",)
+FORMAL_PARAMS_POST,✔,",",)
+FORMAL_PARAMS_PRE,✖,"int, float, string, char, boolean","), ,"
+STMTS,✖,"input, print, return, int, float, string, char, boolean, id, if, ifel, while",}
+STMT_PRE,✖,"input, print, return, int, float, string, char, boolean, id, if, ifel, while","}, input, print, return, int, float, string, char, boolean, id, if, ifel, while"
+STMT_POST,✔,"input, print, return, int, float, string, char, boolean, id, if, ifel, while",}
+STMT,✖,"input, print, return, int, float, string, char, boolean, id, if, ifel, while",;
+PRINT_POST,✖,"id, int_literal, float_literal, char_literal, string_literal, true, false",;
+RETURN_POST,✖,"id, int_literal, float_literal, char_literal, string_literal, true, false",;
+POS_3,✔,"=, ,",;
+POS_4,✖,"return, !, (, id, int_literal, float_literal, char_literal, string_literal, true, false",;
+POS_5,✖,"), id, int_literal, float_literal, char_literal, string_literal, true, false",;
+ACTUAL_PARAMS,✖,"id, int_literal, float_literal, char_literal, string_literal, true, false",)
+ACTUAL_PARAMS_PRE,✖,"id, int_literal, float_literal, char_literal, string_literal, true, false","), ,"
+ACTUAL_PARAMS_POST,✔,",",)
+VARLIST_POST,✔,",",;
+CONDITION_ST,✖,"if, ifel",;
+LOOP_ST,✖,while,;
+LITERAL,✖,"int_literal, float_literal, char_literal, string_literal, true, false","), ;, ,, logical_and, logical_or, less_op, greater_op, less_eq_op, greater_eq_op, eq_eq_op, not_eq_op, +, -, ^, &, |, *, /, %"
+BOOL_LITERAL,✖,"true, false","), ;, ,, logical_and, logical_or, less_op, greater_op, less_eq_op, greater_eq_op, eq_eq_op, not_eq_op, +, -, ^, &, |, *, /, %"
+REL_OP,✖,"less_op, greater_op, less_eq_op, greater_eq_op, eq_eq_op, not_eq_op","!, (, id, int_literal, float_literal, char_literal, string_literal, true, false"
+LOG_OP,✖,"logical_and, logical_or","!, (, id, int_literal, float_literal, char_literal, string_literal, true, false"
+RELN_EXPR,✖,"!, (, id, int_literal, float_literal, char_literal, string_literal, true, false",)
+RELN_EXPR',✔,"logical_and, logical_or",)
+EXPR,✖,"!, (, id, int_literal, float_literal, char_literal, string_literal, true, false",";, ), logical_and, logical_or, less_op, greater_op, less_eq_op, greater_eq_op, eq_eq_op, not_eq_op"
+EXPR',✔,"+, -, ^, &, |",";, ), logical_and, logical_or, less_op, greater_op, less_eq_op, greater_eq_op, eq_eq_op, not_eq_op"
+TERM,✖,"(, id, int_literal, float_literal, char_literal, string_literal, true, false",";, ), logical_and, logical_or, less_op, greater_op, less_eq_op, greater_eq_op, eq_eq_op, not_eq_op, +, -, ^, &, |"
+TERM',✔,"*, /, %",";, ), logical_and, logical_or, less_op, greater_op, less_eq_op, greater_eq_op, eq_eq_op, not_eq_op, +, -, ^, &, |"
+FACTOR,✖,"id, int_literal, float_literal, char_literal, string_literal, true, false",";, ), logical_and, logical_or, less_op, greater_op, less_eq_op, greater_eq_op, eq_eq_op, not_eq_op, +, -, ^, &, |, *, /, %"
