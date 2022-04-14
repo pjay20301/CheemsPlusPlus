@@ -8,25 +8,28 @@ using namespace std;
 class ParseTree {
 
 public:
-    static set <string> terminals;
-    static set <string> nonTerminals;
+    set <string> terminals = {"$","id","(",")","{","}","maimn","inmt","floamt","strinmg","chamr","booml",",",";","cimn","coumt","returmn","=","imf","elmse imf", "elmse", "whimle","int_literal","float_literal","char_literal","string_literal","trmue","falmse","<",">","<=",">=","==","!=","&","|","!","+","-", "++", "+=", "--", "-=","&&", "||", ">>", "<<", "#", "[", "]", "\"", "\'", "*","/","!", "%","ssc"};
+    set <string> nonTerminals = {"S","PROGRAM","FUNCTION_LIST","FIRST_FUNCTION","FIRST_FUNCTION_PRE","FIRST_FUNCTION_POST""MORE_FUNCTIONS","MAIN","TYPE","FORMAL_PARAMS","FORMAL_PARAMS_POST","FORMAL_PARAMS_PRE","STMTS","STMT_PRE","STMT_POST","STMT","PRINT_POST","RETURN_POST","POS_3","POS_4","POS_5","ACTUAL_PARAMS","ACTUAL_PARAMS_P,RE""ACTUAL_PARAMS_POST","VARLIST_POST","CONDITION_ST","LOOP_ST","LITERAL","BOOL_LITERAL","REL_OP","LOG_OP","RELN_EXPR","RELN_EXPR'","EXPR","EXPR'","TERM","TERM'","FACTOR",};
     Node *root;
     Node *left;
     Node *right;
     vector < ProductionRule > productions;
     map <int, vector <string> > levelOrderTraversal;
     ParseTree() {
-
+    
     }
 
     ParseTree(string s) {
         this -> root -> label = s;
+        this -> terminals = {"$","id","(",")","{","}","maimn","inmt","floamt","strinmg","chamr","booml",",",";","cimn","coumt","returmn","=","imf","elmse imf", "elmse", "whimle","int_literal","float_literal","char_literal","string_literal","trmue","falmse","<",">","<=",">=","==","!=","&","|","!","+","-", "++", "+=", "--", "-=","&&", "||", ">>", "<<", "#", "[", "]", "\"", "\'", "*","/","!", "%","ssc"};
+
+        this -> nonTerminals = {"S","PROGRAM","FUNCTION_LIST","FIRST_FUNCTION","FIRST_FUNCTION_PRE","FIRST_FUNCTION_POST""MORE_FUNCTIONS","MAIN","TYPE","FORMAL_PARAMS","FORMAL_PARAMS_POST","FORMAL_PARAMS_PRE","STMTS","STMT_PRE","STMT_POST","STMT","PRINT_POST","RETURN_POST","POS_3","POS_4","POS_5","ACTUAL_PARAMS","ACTUAL_PARAMS_P,RE""ACTUAL_PARAMS_POST","VARLIST_POST","CONDITION_ST","LOOP_ST","LITERAL","BOOL_LITERAL","REL_OP","LOG_OP","RELN_EXPR","RELN_EXPR'","EXPR","EXPR'","TERM","TERM'","FACTOR",};
     }
 
     void setProductions(vector <ProductionRule> productions) {
         this -> productions = productions;
     }
-    
+
     void createParseTree(Node *cur, int &cnt) {
         if(cur == NULL) {
             return;
@@ -40,7 +43,7 @@ public:
         for(auto ch: children) {
             Node *node = new Node();
             node -> label = ch;
-            cur -> children.emplace_back(node);
+            cur -> children.push_back(node);
         }
 
         for(auto ch: cur -> children) {
@@ -55,10 +58,10 @@ public:
 
         string curLabel = cur -> label;
         if(!(terminals.count(curLabel))) {
-            levelOrderTraversal[level].emplace_back(curLabel);
+            levelOrderTraversal[level].push_back(curLabel);
             return;
         }
-        levelOrderTraversal[level].emplace_back(curLabel);
+        levelOrderTraversal[level].push_back(curLabel);
         for(auto ch: cur -> children) {
             printParseTree(ch, level+1);
         }

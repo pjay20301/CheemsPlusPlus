@@ -1,6 +1,5 @@
 #include "lexer.hpp"
 #include "parseTableEntry.hpp"
-#include "productionRule.hpp"
 #include "parseTree.hpp"
 
 struct compare {
@@ -10,7 +9,7 @@ struct compare {
 };
 
 map < ParseTableEntry, ProductionRule, compare> parseTable;
-vector <string> parserInput;
+vector <string> inputToParser;
 map <int, string> tokenToLexeme;
 stack <string> input;
 vector < vector <string> > currentStackContents;
@@ -49,9 +48,65 @@ void populateParseTable() {
     return;
 }
 void tokenNumberToLexeme() {
-
+    int c = 104;
     tokenToLexeme.insert({100, "id"});
-    tokenToLexeme.insert({});
+    tokenToLexeme.insert({101, "int_literal"});
+    tokenToLexeme.insert({102, "string_literal"});
+    tokenToLexeme.insert({103, "char_literal"});
+    tokenToLexeme.insert({c++, "inmt"});
+    tokenToLexeme.insert({c++, "floamt"});
+    tokenToLexeme.insert({c++, "chamr"});
+    tokenToLexeme.insert({c++, "strinmg"});
+    tokenToLexeme.insert({c++, "booml"});
+    tokenToLexeme.insert({c++, "voimd"});
+    tokenToLexeme.insert({c++, "maimn"});
+    tokenToLexeme.insert({c++, "cimn"});
+    tokenToLexeme.insert({c++, "coumt"});
+    tokenToLexeme.insert({c++, "whimle"});
+    tokenToLexeme.insert({c++, "fomr"});
+    tokenToLexeme.insert({c++, "imf"});
+    tokenToLexeme.insert({c++, "elmse"});
+    tokenToLexeme.insert({c++, "elmse imf"});
+    tokenToLexeme.insert({c++, "trmue"});
+    tokenToLexeme.insert({c++, "falmse"});
+    tokenToLexeme.insert({c++, "endml"});
+    tokenToLexeme.insert({c++, "breamk"});
+    tokenToLexeme.insert({c++, "contimnue"});
+    tokenToLexeme.insert({c++, "returmn"});
+    tokenToLexeme.insert({c++, "+"});
+    tokenToLexeme.insert({c++, "-"});
+    tokenToLexeme.insert({c++, "*"});
+    tokenToLexeme.insert({c++, "/"});
+    tokenToLexeme.insert({c++, "%"});
+    tokenToLexeme.insert({c++, "=="});
+    tokenToLexeme.insert({c++, "!="});
+    tokenToLexeme.insert({c++, "="});
+    tokenToLexeme.insert({c++, "&&"});
+    tokenToLexeme.insert({c++, "||"});
+    tokenToLexeme.insert({c++, "!"});
+    tokenToLexeme.insert({c++, "&"});
+    tokenToLexeme.insert({c++, "|"});
+    tokenToLexeme.insert({c++, "<"});
+    tokenToLexeme.insert({c++, ">"});
+    tokenToLexeme.insert({c++, "<="});
+    tokenToLexeme.insert({c++, ">="});
+    tokenToLexeme.insert({c++, "++"});
+    tokenToLexeme.insert({c++, "--"});
+    tokenToLexeme.insert({c++, "+="});
+    tokenToLexeme.insert({c++, "-="});
+    tokenToLexeme.insert({c++, "<<"});
+    tokenToLexeme.insert({c++, ">>"});
+    tokenToLexeme.insert({c++, "#"});
+    tokenToLexeme.insert({c++, ";"});
+    tokenToLexeme.insert({c++, ","});
+    tokenToLexeme.insert({c++, "{"});
+    tokenToLexeme.insert({c++, "}"});
+    tokenToLexeme.insert({c++, "("});
+    tokenToLexeme.insert({c++, ")"});
+    tokenToLexeme.insert({c++, "["});
+    tokenToLexeme.insert({c++, "]"});
+    tokenToLexeme.insert({c++, "\""});
+    tokenToLexeme.insert({c++, "\'"});
     return;
 }
 int parser(stack <string> st, stack < string> remInput) {
@@ -74,7 +129,7 @@ int parser(stack <string> st, stack < string> remInput) {
             revStr.push_back(stCopy.top());
             stCopy.pop();
         }
-        currentStackContents.emplace_back(revStr);
+        currentStackContents.push_back(revStr);
         string stackTop = st.top();
         string curInput = remInput.top();
 
@@ -105,12 +160,12 @@ int parser(stack <string> st, stack < string> remInput) {
             }
             
             if(RHS[0] == "ssc") {
-                productions.emplace_back(parseTable[key]);
+                productions.push_back(parseTable[key]);
                 st.pop();
                 continue;
             }
 
-            productions.emplace_back(parseTable[key]);
+            productions.push_back(parseTable[key]);
             st.pop();
             for(int i = RHS.size()-1; i >= 0; i--) {
                 st.push(RHS[i]);
@@ -133,14 +188,14 @@ int32_t main() {
     tokenNumberToLexeme();
 
     vector< pair <string, int> > tokenList = lexer();
-    for(auto &[x, y]: tokenList) {
-        parserInput.emplace_back(parseTable[y]);
+    for(auto token: tokenList) {
+        inputToParser.push_back(tokenToLexeme[token.second]);
     }
     cout << endl;
-    parserInput.emplace_back("$");
+    inputToParser.push_back("$");
 
-    for (int i = parserInput.size() - 1; i >= 0; i--) {
-        input.push(parserInput[0]);
+    for (int i = inputToParser.size() - 1; i >= 0; i--) {
+        input.push(inputToParser[i]);
     }
 
     stack <string> st;
@@ -151,10 +206,10 @@ int32_t main() {
         int cnt = 0;
         tree.setProductions(productions);
         tree.createParseTree(tree.root, cnt);
-        tree.printParseTree(tree.root, 0);
-        for(auto [level, nodes]: tree.levelOrderTraversal) {
-            cout << "Level " << level << " ";
-            for(auto node: nodes) {
+        tree.printParseTree(tree.root, cnt);
+        for(auto level: tree.levelOrderTraversal) {
+            cout << "Level " << level.first << " ";
+            for(auto node: level.second) {
                 cout << node << " ";
             }
             cout << endl;
