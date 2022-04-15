@@ -4,7 +4,10 @@
 
 struct compare {
     bool operator()(const ParseTableEntry& a, const ParseTableEntry& b) const {
-        return a.nonTerminal.length() <= b.nonTerminal.length();
+        if (a.nonTerminal == b.nonTerminal) {
+            return a.terminal < b.terminal;
+        }
+        return a.nonTerminal < b.nonTerminal;
     }
 };
 
@@ -51,17 +54,17 @@ void populateParseTable() {
         }
         fp.close(); 
     }
-    cout << parseTable.size() << endl;
-    for(auto i: parseTable) {
-        cout << i.first.nonTerminal << " " << i.first.terminal << " " << i.second.LHS << " ";
-        for(auto j: i.second.RHS) {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-    if(parseTable.count({"PROGRAM", "maimn"})) {
-        cout << "i am here" << endl;
-    }
+    // cout << parseTable.size() << endl;
+    // for(auto i: parseTable) {
+    //     cout << i.first.nonTerminal << " " << i.first.terminal << " " << i.second.LHS << " ";
+    //     for(auto j: i.second.RHS) {
+    //         cout << j << " ";
+    //     }
+    //     cout << endl;
+    // }
+    // if(parseTable.count({"PROGRAM", "maimn"})) {
+    //     cout << "i am here" << endl;
+    // }
     return;
 }
 void tokenNumberToLexeme() {
@@ -134,22 +137,22 @@ int parser(stack <string> st, stack < string> remInput, ParseTree tree) {
             needParseTree = 1;
             break;
         } else if(st.empty()) {
-            for(auto i: tree.productions) {
-                cout << i.LHS << " -> ";
-            for(auto j: i.RHS) {
-                cout << j << " ";
-            }
-                cout << endl;
-            }
+            // for(auto i: tree.productions) {
+            //     cout << i.LHS << " -> ";
+            // for(auto j: i.RHS) {
+            //     cout << j << " ";
+            // }
+            //     cout << endl;
+            // }
             cout << "Parsing was completed but input string is not completely consumed and all non terminals are exhausted" << endl;
             break;
         } else if(remInput.empty()) {
-            for(auto i: tree.productions) {
-                cout << i.LHS << " -> ";
-            for(auto j: i.RHS) {
-                cout << j << " ";
-            }
-            }
+            // for(auto i: tree.productions) {
+            //     cout << i.LHS << " -> ";
+            // for(auto j: i.RHS) {
+            //     cout << j << " ";
+            // }
+            // }
             cout << endl;
             cout << "Parsing was completed but the input string is completely consumed and the stack is not empty" << endl;
             break;
@@ -163,23 +166,22 @@ int parser(stack <string> st, stack < string> remInput, ParseTree tree) {
         currentStackContents.push_back(revStr);
         string stackTop = st.top();
         string curInput = remInput.top();
-        cout << stackTop << " " << curInput << endl;
+        //cout << stackTop << " " << curInput << endl;
         if((tree.terminals.count(stackTop))) {
-            cout << "mai yaha hu" << endl;
+            //cout << "mai yaha hu" << endl;
             if(stackTop == curInput) {
                 remInput.pop();
                 st.pop();
             } else {
-                
                 correctSyntax = 0;
                 cout << "Terminals do not match Expected : " << stackTop << " and Found : " << curInput << endl;
                 remInput.pop();
             }
         } else {
-            cout << "mai kahi bhi nahi" << endl;
+            //cout << "mai kahi bhi nahi" << endl;
             ParseTableEntry key(stackTop, curInput);
             string LHS = parseTable[key].LHS;
-            cout << LHS << endl;
+            //cout << LHS << endl;
 
             vector <string> RHS = parseTable[key].RHS;
 
@@ -244,7 +246,7 @@ int32_t main() {
     st.push("$");
     st.push("PROGRAM");
     
-for(auto i: productions) {
+    for(auto i: productions) {
             cout << i.LHS << " -> ";
             for(auto j: i.RHS) {
                 cout << j << " ";
@@ -252,13 +254,11 @@ for(auto i: productions) {
             cout << endl;
         }
     if(parser(st, input, tree)) {
-        cout << "ok" << endl;
+        cout << "PArsing was done susscesfully, returning 1" << endl;
         int cnt = 0;
-        
         tree.setProductions(productions);
-        
         tree.createParseTree(tree.root, cnt);
-        tree.printParseTree(tree.root, cnt);
+        tree.printParseTree(tree.root, 0);
         for(auto level: tree.levelOrderTraversal) {
             cout << "Level " << level.first << " ";
             for(auto node: level.second) {
