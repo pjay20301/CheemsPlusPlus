@@ -4,7 +4,7 @@
 
 struct compare {
     bool operator()(const ParseTableEntry& a, const ParseTableEntry& b) const {
-        return a.nonTerminal.length() <= b.nonTerminal.length();
+        return a.nonTerminal <= b.nonTerminal;
     }
 };
 
