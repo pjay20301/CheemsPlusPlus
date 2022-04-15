@@ -1,4 +1,7 @@
 maimn()
 {
-    inmt sum;
+	inmt num1,num2;
+	cimn >> num1;
+    cimn >> num2;
+	inmt val = num1 * num2;
 }
