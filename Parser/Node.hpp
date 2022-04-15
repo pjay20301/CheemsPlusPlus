@@ -6,4 +6,8 @@ class Node {
 public:
     string label;
     vector <Node*> children;
+
+    Node() {
+        this -> label = "";
+    }
 };

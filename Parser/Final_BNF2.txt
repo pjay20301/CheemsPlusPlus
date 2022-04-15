@@ -8,11 +8,11 @@ FIRST_FUNCTION_POST -> ) { STMTS }
 MORE_FUNCTIONS -> '' 
 MORE_FUNCTIONS -> FIRST_FUNCTION
 MAIN -> main ( ) { STMTS }
-TYPE -> int
-TYPE -> float
-TYPE -> string
-TYPE -> char
-TYPE -> boolean
+TYPE -> inmt
+TYPE -> floamt
+TYPE -> strinmg
+TYPE -> chamr
+TYPE -> booml
 FORMAL_PARAMS -> FORMAL_PARAMS_PRE FORMAL_PARAMS_POST
 FORMAL_PARAMS_POST -> ''
 FORMAL_PARAMS_POST -> , FORMAL_PARAMS
@@ -23,8 +23,8 @@ STMT_POST -> STMTS
 STMT_POST -> ''
 STMT -> CONDITION_ST
 STMT -> LOOP_ST
-STMT -> input ( id )
-STMT -> print ( PRINT_POST
+STMT -> cimn >> id 
+STMT -> coumt << PRINT_POST
 PRINT_POST -> id )
 PRINT_POST -> LITERAL )
 STMT -> return RETURN_POST
@@ -34,7 +34,7 @@ STMT -> TYPE id POS_3
 STMT -> id = POS_4
 POS_3 -> VARLIST_POST 
 POS_3 -> = POS_4
-POS_4 -> return id ( POS_5
+POS_4 -> returmn id ( POS_5
 POS_4 -> EXPR
 POS_5 -> )
 POS_5 -> ACTUAL_PARAMS )
@@ -45,24 +45,24 @@ ACTUAL_PARAMS_POST -> , ACTUAL_PARAMS
 ACTUAL_PARAMS_POST -> ''
 VARLIST_POST -> , id VARLIST_POST
 VARLIST_POST ->  ''
-CONDITION_ST -> if ( RELN_EXPR ) { STMTS } 
-CONDITION_ST -> ifel ( RELN_EXPR ) { STMTS } { STMTS }
-LOOP_ST -> while ( RELN_EXPR ) { STMTS } 
+CONDITION_ST -> imf ( RELN_EXPR ) { STMTS } 
+CONDITION_ST -> elmse imf ( RELN_EXPR ) { STMTS } { STMTS }
+LOOP_ST -> whimle ( RELN_EXPR ) { STMTS } 
 LITERAL -> int_literal 
 LITERAL -> float_literal
 LITERAL -> char_literal 
 LITERAL -> string_literal 
 LITERAL -> BOOL_LITERAL
-BOOL_LITERAL -> true 
-BOOL_LITERAL -> false
-REL_OP -> less_op 
-REL_OP -> greater_op  
-REL_OP -> less_eq_op  
-REL_OP -> greater_eq_op  
-REL_OP -> eq_eq_op  
-REL_OP -> not_eq_op
-LOG_OP -> logical_and
-LOG_OP -> logical_or
+BOOL_LITERAL -> trmue 
+BOOL_LITERAL -> falmse
+REL_OP -> < 
+REL_OP -> >  
+REL_OP -> <= 
+REL_OP -> >= 
+REL_OP -> ==
+REL_OP -> !=
+LOG_OP -> &
+LOG_OP -> |
 RELN_EXPR -> EXPR REL_OP EXPR RELN_EXPR'
 RELN_EXPR' -> LOG_OP RELN_EXPR 
 RELN_EXPR' -> ''
@@ -70,7 +70,6 @@ EXPR ->  TERM EXPR'
 EXPR -> ! EXPR 
 EXPR' ->  + TERM EXPR' 
 EXPR' ->  - TERM EXPR' 
-EXPR' ->  ^ TERM EXPR' 
 EXPR' ->  & TERM EXPR' 
 EXPR' ->  | TERM EXPR'  
 EXPR' ->  ''

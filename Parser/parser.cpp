@@ -4,7 +4,7 @@
 
 struct compare {
     bool operator()(const ParseTableEntry& a, const ParseTableEntry& b) const {
-        return a.nonTerminal < b.nonTerminal;
+        return a.nonTerminal.length() <= b.nonTerminal.length();
     }
 };
 
@@ -14,36 +14,53 @@ map <int, string> tokenToLexeme;
 stack <string> input;
 vector < vector <string> > currentStackContents;
 vector < ProductionRule > productions;
-ParseTree tree("PROGRAM");
 
 void populateParseTable() {
     fstream fp;
-    fp.open("parser_table", ios::in);
-    
+    fp.open("parser_table.txt", ios::in);
+    int cnt = 0;
     if(fp.is_open()) {
-        string cur;
-
-        while(getline(fp, cur)) {
-            istringstream iss(cur);
+        string s;
+        while(getline(fp, s)) {
+            istringstream iss(s);
             ParseTableEntry entry;
 
-            for (string s; iss >> cur; ) {
+            for (string s; iss >> s; ) {
                 entry.nonTerminal = s;
-                iss >> cur;
 
+                iss >> s;
                 entry.terminal = s;
-                iss >> cur;
 
+                iss >> s;
                 ProductionRule rule;
                 rule.LHS = s;
 
-                for(; iss >> cur; ) {
+                iss >> s;
+
+                for(; iss >> s; ) {
                     rule.RHS.push_back(s);
                 }
-                parseTable[entry] = rule;
+                parseTable.insert({entry, rule});
+                cnt++;
+                // cout << entry.nonTerminal << " " << entry.terminal << " " << rule.LHS << " ";
+                // for(auto i: rule.RHS) {
+                //     cout << i << " ";
+                // }
+                // cout << endl;
             }
         }
-        fp.close();
+        fp.close(); 
+    }
+    cout << parseTable.size() << endl;
+    for(auto i: parseTable) {
+        cout << i.first.nonTerminal << " " << i.first.terminal << " " << i.second.LHS << " ";
+        for(auto j: i.second.RHS) {
+            cout << j << " ";
+        }
+        cout << endl;
+    }
+    if(parseTable.count({"PROGRAM", "maimn"})) {
+        cout << "i am here" << endl;
     }
     return;
 }
@@ -109,7 +126,7 @@ void tokenNumberToLexeme() {
     tokenToLexeme.insert({c++, "\'"});
     return;
 }
-int parser(stack <string> st, stack < string> remInput) {
+int parser(stack <string> st, stack < string> remInput, ParseTree tree) {
     int correctSyntax = 1;
     int needParseTree = 0;
     while(true) {
@@ -117,9 +134,23 @@ int parser(stack <string> st, stack < string> remInput) {
             needParseTree = 1;
             break;
         } else if(st.empty()) {
+            for(auto i: tree.productions) {
+                cout << i.LHS << " -> ";
+            for(auto j: i.RHS) {
+                cout << j << " ";
+            }
+                cout << endl;
+            }
             cout << "Parsing was completed but input string is not completely consumed and all non terminals are exhausted" << endl;
             break;
         } else if(remInput.empty()) {
+            for(auto i: tree.productions) {
+                cout << i.LHS << " -> ";
+            for(auto j: i.RHS) {
+                cout << j << " ";
+            }
+            }
+            cout << endl;
             cout << "Parsing was completed but the input string is completely consumed and the stack is not empty" << endl;
             break;
         }
@@ -132,19 +163,24 @@ int parser(stack <string> st, stack < string> remInput) {
         currentStackContents.push_back(revStr);
         string stackTop = st.top();
         string curInput = remInput.top();
-
-        if(!(tree.terminals.count(stackTop))) {
+        cout << stackTop << " " << curInput << endl;
+        if((tree.terminals.count(stackTop))) {
+            cout << "mai yaha hu" << endl;
             if(stackTop == curInput) {
                 remInput.pop();
                 st.pop();
             } else {
+                
                 correctSyntax = 0;
-                cout << "Terminals do not match : - Expected :" << stackTop << " || Found : " << curInput << endl;
+                cout << "Terminals do not match Expected : " << stackTop << " and Found : " << curInput << endl;
                 remInput.pop();
             }
         } else {
+            cout << "mai kahi bhi nahi" << endl;
             ParseTableEntry key(stackTop, curInput);
             string LHS = parseTable[key].LHS;
+            cout << LHS << endl;
+
             vector <string> RHS = parseTable[key].RHS;
 
             if(LHS == "SYNCH") {
@@ -152,7 +188,8 @@ int parser(stack <string> st, stack < string> remInput) {
                 cout << "SYNCH was encountered in Parse table entry and " << stackTop << " was omitted." << endl;
                 st.pop();
                 continue;
-            } else if(LHS == "SKIP") {
+            } 
+            if(LHS == "SKIP") {
                 correctSyntax = 0;
                 cout << "SKIP was encountered in Parse Table entry and current input symbol " << curInput << " was omitted." << endl;
                 remInput.pop();
@@ -176,18 +213,23 @@ int parser(stack <string> st, stack < string> remInput) {
     if(correctSyntax == 0) {
         cout << "Parsing was completed but either terminals did not match, SKIP was used or SYNCH was used" << endl;
         return 0;
-    } else if(needParseTree == 1)  {
+    } 
+    if(needParseTree == 1)  {
         cout << "Parsing was successful and the level order traversal for the parse tree is generated as follows:-" << endl;
         return 1;
     }
     return 0;
 }
 int32_t main() {
-
+    
     populateParseTable();
     tokenNumberToLexeme();
+    ParseTree tree;
+    tree.root = new Node();
+    tree.setStart("PROGRAM");
 
     vector< pair <string, int> > tokenList = lexer();
+    
     for(auto token: tokenList) {
         inputToParser.push_back(tokenToLexeme[token.second]);
     }
@@ -201,10 +243,20 @@ int32_t main() {
     stack <string> st;
     st.push("$");
     st.push("PROGRAM");
-
-    if(parser(st, input)) {
+    
+for(auto i: productions) {
+            cout << i.LHS << " -> ";
+            for(auto j: i.RHS) {
+                cout << j << " ";
+            }
+            cout << endl;
+        }
+    if(parser(st, input, tree)) {
+        cout << "ok" << endl;
         int cnt = 0;
+        
         tree.setProductions(productions);
+        
         tree.createParseTree(tree.root, cnt);
         tree.printParseTree(tree.root, cnt);
         for(auto level: tree.levelOrderTraversal) {

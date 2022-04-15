@@ -1,3 +1,4 @@
-inmt maimn() {
-    returmn 0;
+maimn()
+{
+    inmt sum;
 }
