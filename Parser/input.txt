@@ -1,5 +1,3 @@
-maimn()
-{
-	inmt num1;
-    cimn (num1);
+maimn() {
+    a = b * c;
 }

@@ -69,4 +69,18 @@ public:
         }
         return;
     }
+
+    // void generateThreeAdressCodes(Node *cur) {
+    //     if (cur == NULL) {
+    //         return;
+    //     }
+    //     string curLabel = cur->label;
+    //     if ((terminals.count(curLabel))) {
+    //         if (curLabel == "id") {
+    //             operands.push(id);
+    //         }
+    //         return;
+    //     }
+    // }
+
 };

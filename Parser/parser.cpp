@@ -1,6 +1,8 @@
 #include "lexer.hpp"
 #include "parseTableEntry.hpp"
 #include "parseTree.hpp"
+#include <bits/stdc++.h>
+using namespace std;
 
 struct compare {
     bool operator()(const ParseTableEntry& a, const ParseTableEntry& b) const {
@@ -253,7 +255,7 @@ int32_t main() {
                 cout << j << " ";
             }
             cout << endl;
-        }
+    }
     if(parser(st, input, tree)) {
         cout << "Parsing was done susscesfully, returning 1" << endl;
         int cnt = 0;
@@ -261,12 +263,13 @@ int32_t main() {
         tree.createParseTree(tree.root, cnt);
         tree.printParseTree(tree.root, 0);
         for(auto level: tree.levelOrderTraversal) {
-            cout << "Level " << level.first << " ";
+            cout << "Level " << level.first << ": ";
             for(auto node: level.second) {
                 cout << node << " ";
             }
             cout << endl;
         }
+
     } else {
         cout << endl;
         cout << "Input is not valid according to the CheemsPlusPlus" << endl;
@@ -280,5 +283,103 @@ int32_t main() {
             cout << endl;
         }
     }
+    fstream fp;
+    fp.open("input_for_immediate_code.txt", ios::in);
+    vector <string> tokens;
+    if (fp.is_open()) {
+        string line;
+        while (getline(fp, line)) {
+            stack <string> operands, opeartor;
+            stringstream ss(line);
+            string cur;
+            while (ss >> cur) {
+                tokens.push_back(cur);
+            }
+        }
+    }
+    fp.close();
+    map <string, string> sdt;
+    cout << "------------------------------" << '\n';
+    cout << "INITIAL EXPRESSION IS : \n";
+    for (auto i : tokens) {
+        cout << i << " ";
+    }
+    cout << '\n';
+    cout << "INTERMEDIATE CODE GENERATION FOR THE FOLLOWING \n";
+    int cnt = 1;
+    while (tokens.size() > 3) {
+        while (find(tokens.begin(), tokens.end(), "*") != tokens.end()) {
+            vector <string> new_tokens;
+            for (int i = 0; i < tokens.size(); ) {
+                if (tokens[i] == "*") {
+                    new_tokens.pop_back();
+                    new_tokens.push_back("t" + to_string(cnt));
+                    sdt["t" + to_string(cnt)] = tokens[i - 1] + " * " + tokens[i + 1]; 
+                    i += 2;
+                    cnt++;
+                } else {
+                    new_tokens.push_back(tokens[i]);
+                    i++;
+                }
+            }
+            swap(tokens, new_tokens);
+        }
+        while (find(tokens.begin(), tokens.end(), "+") != tokens.end())
+        {
+            vector<string> new_tokens;
+            for (int i = 0; i < tokens.size();)
+            {
+                if (tokens[i] == "+")
+                {
+                    new_tokens.pop_back();
+                    new_tokens.push_back("t" + to_string(cnt));
+                    sdt["t" + to_string(cnt)] = tokens[i - 1] + " + " + tokens[i + 1];
+                    i += 2;
+                    cnt++;
+                }
+                else
+                {
+                    new_tokens.push_back(tokens[i]);
+                    i++;
+                }
+            }
+            swap(tokens, new_tokens);
+        }
+        while (find(tokens.begin(), tokens.end(), "-") != tokens.end())
+        {
+            vector<string> new_tokens;
+            for (int i = 0; i < tokens.size();)
+            {
+                if (tokens[i] == "-")
+                {
+                    new_tokens.pop_back();
+                    new_tokens.push_back("t" + to_string(cnt));
+                    sdt["t" + to_string(cnt)] = tokens[i - 1] + " - " + tokens[i + 1];
+                    i += 2;
+                    cnt++;
+                }
+                else
+                {
+                    new_tokens.push_back(tokens[i]);
+                    i++;
+                }
+            }
+            swap(tokens, new_tokens);
+        }
+    }
+    assert(tokens.size() == 3);
+    //sdt[tokens[0]] = tokens[2];
+    vector <pair<string, string>> res;
+    for (auto it : sdt) {
+        res.push_back({it.first, it.second});
+        //cout << it.first << " = " << it.second << '\n';
+    } 
+    sort(begin(res), begin(res));
+    res.push_back({tokens[0], tokens[2]});
+    //reverse(begin(res), end(res));
+    for (auto it : res) {
+        cout << it.first << " = " << it.second << '\n';
+    }
+    cout << "----------------------------------\n";
     return 0;
 }
