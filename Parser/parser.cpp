@@ -11,6 +11,7 @@ struct compare {
     }
 };
 
+
 map < ParseTableEntry, ProductionRule, compare> parseTable;
 vector <string> inputToParser;
 map <int, string> tokenToLexeme;
@@ -254,7 +255,7 @@ int32_t main() {
             cout << endl;
         }
     if(parser(st, input, tree)) {
-        cout << "PArsing was done susscesfully, returning 1" << endl;
+        cout << "Parsing was done susscesfully, returning 1" << endl;
         int cnt = 0;
         tree.setProductions(productions);
         tree.createParseTree(tree.root, cnt);
