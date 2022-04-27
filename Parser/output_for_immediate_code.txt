@@ -1,0 +1,17 @@
+---------------------
+Intermediate code for arithmetic_expression : 
+
+t1:=e+x
+t2:=d-t1
+t3:=c*t2
+t4:=b+t3
+a:=t4
+---------------------
+, line number 1
+Token 500, string "c", line number 1
+Token 302, string "*", line number 1
+Token 500, string "d", line number 1
+Token 301, string "-", line number 1
+Token 500, string "e", line number 1
+Token 300, string "+", line number 1
+Token 500, string "x", line number 1

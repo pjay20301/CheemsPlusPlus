@@ -57,7 +57,6 @@ public:
         if(cur == NULL) {
             return;
         }
-
         string curLabel = cur -> label;
         if((terminals.count(curLabel))) {
             levelOrderTraversal[level].push_back(curLabel);
@@ -69,18 +68,24 @@ public:
         }
         return;
     }
-
-    // void generateThreeAdressCodes(Node *cur) {
-    //     if (cur == NULL) {
-    //         return;
-    //     }
-    //     string curLabel = cur->label;
-    //     if ((terminals.count(curLabel))) {
-    //         if (curLabel == "id") {
-    //             operands.push(id);
-    //         }
-    //         return;
-    //     }
-    // }
-
+    void generateThreeAdressCodes(Node *cur) {
+        if (cur == NULL) {
+            return;
+        }
+        string curLabel = cur->label;
+        if ((terminals.count(curLabel))) {
+            if (curLabel == "id") {
+                //operands.push(id);
+                //generateThreeAdressCodes();
+            }
+            return;
+        } else {
+            for(auto ch: cur -> children) {
+                generateThreeAdressCodes(ch);
+            }
+            for (auto ch : cur->children) {
+                generateThreeAdressCodes(ch);
+            }
+        }
+    }
 };

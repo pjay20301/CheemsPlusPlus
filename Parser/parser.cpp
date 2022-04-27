@@ -132,6 +132,7 @@ void tokenNumberToLexeme() {
     tokenToLexeme.insert({c++, "\'"});
     return;
 }
+
 int parser(stack <string> st, stack < string> remInput, ParseTree tree) {
     int correctSyntax = 1;
     int needParseTree = 0;
@@ -225,6 +226,48 @@ int parser(stack <string> st, stack < string> remInput, ParseTree tree) {
     }
     return 0;
 }
+
+void sdt(stack<string> st, stack<string> remInput, ParseTree tree) {
+    stack <string> attribute_stack;
+    while (true) {
+        stack<string> stCopy(st);
+        vector<string> revStr;
+        while (!stCopy.empty()) {
+            revStr.push_back(stCopy.top());
+            stCopy.pop();
+        }
+        currentStackContents.push_back(revStr);
+        string stackTop = st.top();
+        string attribute_top = attribute_stack.top();
+        string curInput = remInput.top();
+        if ((tree.terminals.count(stackTop))) {
+            if (stackTop == curInput) {
+                remInput.pop();
+                st.pop();
+                attribute_stack.pop();
+            } else {
+                remInput.pop();
+            }
+        } else {
+            ParseTableEntry key(stackTop, curInput);
+            string LHS = parseTable[key].LHS;
+            vector<string> RHS = parseTable[key].RHS;
+            if (LHS == "SYNCH") {
+                st.pop();
+                attribute_stack.pop();
+                continue;
+            }
+            st.pop();
+            attribute_stack.pop();
+            for (int i = RHS.size() - 1; i >= 0; i--) {
+                st.push(RHS[i]);
+                attribute_stack.pop();
+            }
+        }
+    }
+    return ;
+}
+
 int32_t main() {
     
     populateParseTable();
@@ -377,9 +420,9 @@ int32_t main() {
     sort(begin(res), begin(res));
     res.push_back({tokens[0], tokens[2]});
     //reverse(begin(res), end(res));
-    for (auto it : res) {
-        cout << it.first << " = " << it.second << '\n';
-    }
-    cout << "----------------------------------\n";
+    // for (auto it : res) {
+    //     cout << it.first << " = " << it.second << '\n';
+    // }
+    // cout << "----------------------------------\n";
     return 0;
 }
